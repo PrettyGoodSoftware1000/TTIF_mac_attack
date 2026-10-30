@@ -1,0 +1,24 @@
+# Overlay opacity: how solid the colour wash is INSIDE each highlighted
+# region. The outline around a region is always drawn at full strength, so
+# 0% means "outline only, no fill".
+#   Movement - blue, where the selected character can walk
+#   Range    - red, how far the armed card reaches
+#   Leap     - red, the same for a card carrying Leap
+#   AoE      - purple, a blast card's explosion radius
+#   Cone     - purple, a cone card's wedge
+#   Guard    - red with skulls, ground somebody is standing guard over
+#   Trigger  - violet, an unfired dialogue square
+#   Hover    - yellow, the square under the cursor
+#   Selected - green, under whoever is picked
+#
+# Art is never scaled. Pixel art draws at its own size.
+
+Movement opacity: 20%
+Range opacity: 18%
+Leap opacity: 10%
+AoE opacity: 30%
+Cone opacity: 30%
+Guard opacity: 28%
+Trigger opacity: 18%
+Hover opacity: 35%
+Selected opacity: 30%

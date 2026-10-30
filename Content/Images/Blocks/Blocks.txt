@@ -1,0 +1,48 @@
+# Ground art. Every piece is pixel art drawn at 1:1 - never scaled.
+#
+# Family: <name>        groups interchangeable art. The editor offers a family,
+#                       then a piece inside it or Random.
+# Piece: <file.png>     one image, drawn whole.
+# Anchor: <x>, <y>      the pixel of that image that lands on the exact centre
+#                       of a grid square's top face. A 128x64 surface is
+#                       anchored at 64, 32.
+# Scale: 100            always 100 here. The line is kept so an old file
+#                       still reads; anything else is an error.
+#
+# CHECKERBOARD FAMILIES
+# Put "Checkerboard Dark:" and "Checkerboard Light:" headings inside a family
+# and which half a square draws from is decided by its position, so a dark
+# piece never lands beside another dark one.
+#
+# A surface is 128x64: one square's top face. A block is the same face over a
+# 48px body, for ground with height.
+
+Family: PixelGrass
+Piece: PixelGrassSurface.png
+Anchor: 64, 32
+Scale: 100
+
+Family: PixelStone
+Piece: PixelStoneSurface.png
+Anchor: 64, 32
+Scale: 100
+
+Family: PixelGrassBlock
+Piece: PixelGrassBlock.png
+Anchor: 64, 32
+Scale: 100
+
+Family: PixelStoneBlock
+Piece: PixelStoneBlock.png
+Anchor: 64, 32
+Scale: 100
+
+Family: PixelCheckerboard
+Checkerboard Dark:
+Piece: PixelStoneSurface.png
+Anchor: 64, 32
+Scale: 100
+Checkerboard Light:
+Piece: PixelGrassSurface.png
+Anchor: 64, 32
+Scale: 100

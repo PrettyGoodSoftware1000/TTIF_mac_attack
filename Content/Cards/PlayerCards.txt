@@ -1,0 +1,630 @@
+# ============================ CARD FORMAT ============================
+# Cards are separated by [] lines. Keys are NOT case sensitive and tolerate
+# loose punctuation ("Speed: 2", "Speed 2", "Speed 2:" all work). Only
+# Card Name, Card Text, and Bottom Right keep the capitalization you type,
+# because those are the parts the player reads.
+#
+# Card Name:      (Text shown at the top of the card.)
+# Tags:           (Which classes see this card and can play it. A class
+#                  matches if it shares any tag - see Classes.txt.)
+# Type:           ([melee] or [ranged], then the effect shape. Reuse exactly:
+#                    "AoE damage"             - hits every enemy in the room
+#                    "Single target, X hits." - one chosen target, X hits
+#                    "Two targets, 1 hit."    - pick 2 targets, one hit each
+#                  For [ranged], add one of:
+#                    "Single Projectile"   - one shot, flown at the enemy the
+#                                            player clicks (AoE still damages
+#                                            everyone; the click only aims it)
+#                    "Multiple Projectiles" - one shot per target (default))
+# Action Points:  (What the card costs to play. Everyone earns 2 a turn and
+#                  may carry ONE unspent point forward, so 3 is the most
+#                  anybody can ever bring to a single turn.)
+# Friendly Fire: (Yes or No. Yes means the card hurts whoever it reaches,
+#                  side regardless - a blast catches your own party, and a
+#                  single shot can be aimed at them. Sides are read from the
+#                  CASTER, so an enemy card with friendly fire hurts other
+#                  enemies too. No is the default, and every card should say.)
+# Stops Movement: (Yes or No. Yes ends the turn's walking, which is what
+#                  nearly every card does. No is for cards that change what
+#                  you are holding rather than doing something with it - a
+#                  shapeshift, a shell swap. Nimble adds its movement on top
+#                  either way. No line means Yes, and every card should say.)
+# Animation:      (Animation folder the caster plays for this card, inside
+#                  one of its poses - e.g. "GunShot". Leave it out and the
+#                  class's own Cast Animation is used, or SpellCast when it
+#                  has none.)
+# Projectile Art: (File in Content/Images/Pixel/Effects/. Art must point RIGHT;
+#                  it is rotated to match the shot's travel angle, so a shot
+#                  heading down-right appears rotated clockwise.)
+# Casting Sound:  ([File.wav] played the moment targeting completes.
+#                  [Blank] or [Blank.wav] means no sound and no delay.)
+# Casting Time:   ("Use Sound Time" waits exactly as long as the casting
+#                  sound runs; a number waits that many seconds. This is the
+#                  delay before a projectile launches or a walk begins.)
+# Effects:        (Extra things the card does, comma separated, e.g.
+#                  "Burning 1" or "Armor 5". Several cards can share one.
+#                    Burning N - N stacks; each stack burns the victim for 5
+#                                at the START of their turn, for 2 turns.
+#                                Stacks add up and refresh the timer.
+#                    Armor N   - adds N armour, which soaks damage before
+#                                health does and shows grey on the bar.
+#                    Nimble N  - the CASTER may move N more spaces after
+#                                playing this card.
+#                    Leap N    - the approach move for THIS card reaches N
+#                                further and ignores height entirely.
+#                    Curse N   - the victim takes N extra damage from melee
+#                                cards, for 10 of their turns. Curses stack
+#                                and each keeps its own clock.
+#                    Form X    - the caster changes into their form X, which
+#                                swaps their art and their available cards.
+#                    Steal N   - take a card off anyone, friend or foe, for N
+#                                of the thief's own turns.
+#                    Channel N - the card is cast over two turns. The first
+#                                play pays for it and ROOTS the caster, who can
+#                                then play nothing else until it is released;
+#                                the next turn's play aims and fires it, paying
+#                                again. N is how many turns the wait takes.
+#                    FireTiles N - every square the card covered burns for N
+#                                turns. Burning ground does no damage itself:
+#                                it sets people alight. Starting a turn on it,
+#                                walking through it, and ending a turn on it
+#                                each add a stack of Burning, so someone who
+#                                stops in the fire leaves with more stacks than
+#                                someone who only crosses it.)
+# Form:           (Optional. The card only appears while its owner wears this
+#                  form - see the class's "Form:" lines in Classes.txt.)
+# Explosion Range:(AoE cards only: blast radius in tiles around the impact
+#                  point. Separate from Range, which is only how far the card
+#                  reaches. Shown as a purple area while aiming.)
+# Sky Angle:      (Optional, [ranged] only. Degrees clockwise from straight
+#                  right. Leave it out and the shot flies flat from the caster;
+#                  set it and the shot falls out of the sky at that angle onto
+#                  the square aimed at instead. 110 comes down steeply from the
+#                  upper left.)
+# Speed:          (FEET PER SECOND for the projectile, or for the melee walk
+#                  out and back. The screen is 12 feet tall. Longer distances
+#                  therefore take longer. See the note at the bottom.)
+# Melee Time:     ([melee] only: pause on arrival before the first blow.)
+# Hit Sound:      ([a.wav] for a single blow, or a sequence:
+#                    [a.wav], Delay 0.2, [a.wav], Delay 0.2, [a.wav]
+#                  Each bracketed entry is one blow; "Delay N" is the gap
+#                  before the next. Health drops once per blow, timed to its
+#                  sound - not all at once. The Effect line's total damage is
+#                  split evenly across the blows.)
+# Effect:         (Machine-readable numbers.)
+# Card Text:      (Flavor text the player reads on the card.)
+# Bottom Right:   (Damage TYPE for the corner label, e.g. "15 Fire" -> Fire.
+#                  The number is ignored and recomputed live as total damage
+#                  against the enemies currently in the room.)
+#
+# A trailing (note in parentheses) on any line is stripped by the parser.
+#
+# SPEED NOTE: at 0.5 feet/second a fighter crossing the stage (roughly 4 to 17
+# feet depending on rows) takes 9 to 34 seconds. Values around 6-12 feel like
+# a game; low numbers are slow motion.
+# =====================================================================
+
+[]
+Card Name: Fireball
+Tags: Gun-O-Mancer
+Type: [ranged] AoE damage. Single Projectile
+Action Points: 2
+Friendly Fire: Yes
+Stops Movement: Yes
+Explosion Range: 3
+Casting Sound: [FireballCast.wav]
+Casting Time: 0.2
+Speed: 18
+Hit Sound: [FireballBoom.wav]
+Effect: AoE 5 fire damage to enemies
+Card Text: Goes boom. Does 5 fire damage to everything
+Bottom Right: 15 Fire
+[]
+
+[]
+Card Name: Shank
+Tags: Dirtbag
+Type: [melee] Single target, X hits.
+Action Points: 1
+Friendly Fire: No
+Stops Movement: Yes
+Effects: Nimble 4
+Casting Sound: [Blank.wav]
+Casting Time: Use Sound Time
+Speed: 9
+Melee Time: 0.5
+Hit Sound: [DefaultPop.wav], Delay 0.3, [DefaultPop.wav], Delay 0.3, [DefaultPop.wav]
+Effect: Single target. 3 times x 4 damage.
+Card Text: Stab something for 4 Stabby damage 3 times, then slip away 4 spaces.
+Bottom Right: 12 Stabby
+[]
+
+[]
+Card Name: Pew Pew
+Tags: Cyber Smith
+Type: [ranged] Two targets, 1 hit. Multiple Projectiles
+Action Points: 1
+Friendly Fire: No
+Stops Movement: Yes
+Projectile Art: Circle.png
+Casting Sound: [Blank.wav]
+Casting Time: Use Sound Time
+Speed: 20
+Hit Sound: [DefaultPop.wav]
+Effect: Two targets. 5 damage each.
+Card Text: Blast 2 guys for 5 damage.
+Bottom Right: 5 Energy
+[]
+
+[]
+Card Name: Tentacle Lash
+Tags: The Vessel
+Type: [ranged] Three targets, 1 hit. Multiple Projectiles
+Action Points: 1
+Friendly Fire: No
+Stops Movement: Yes
+Projectile Art: Ball.png
+Casting Sound: [Blank.wav]
+Casting Time: Use Sound Time
+Speed: 20
+Hit Sound: [DefaultPop.wav]
+Effect: Three targets. 5 damage each.
+Card Text: Lash 3 guys for 5 damage.
+Bottom Right: 5 Lash
+[]
+
+[]
+Card Name: Hot Lead
+Tags: Gun-O-Mancer
+Type: [cone] AoE damage
+Action Points: 1
+Friendly Fire: No
+Stops Movement: Yes
+Range: 3
+Effects: Burning 1
+Casting Sound: [Blank.wav]
+Casting Time: Use Sound Time
+Speed: 20
+Hit Sound: [FireballCast.wav]
+Effect: AoE 5 stabby damage to enemies
+Card Text: Spray a cone of hot lead and light guys on fire.
+Bottom Right: 5 Stabby
+[]
+
+[]
+Card Name: Reinforce
+Tags: Cyber Smith
+Type: [ranged] Single target, X hits.
+Action Points: 1
+Friendly Fire: No
+Stops Movement: Yes
+Range: 3
+Effects: Armor 8
+Projectile Art: Ball.png
+Casting Sound: [Blank.wav]
+Casting Time: Use Sound Time
+Speed: 20
+Hit Sound: [DefaultPop.wav]
+Effect: Single target. 1 times x 0 damage.
+Card Text: Bolt a plate onto a friend. Adds 5 Armor.
+Bottom Right: 8 Armor
+[]
+
+[]
+Card Name: Toss-A-Knife
+Tags: Dirtbag
+Type: [ranged] Single target, X hits.
+Action Points: 1
+Friendly Fire: No
+Stops Movement: Yes
+Range: 5
+Projectile Art: Circle.png
+Casting Sound: [Blank.wav]
+Casting Time: Use Sound Time
+Speed: 20
+Hit Sound: [DefaultPop.wav]
+Effect: Single target. 1 times x 5 damage.
+Card Text: Throw a knife for 5 Stabby damage.
+Bottom Right: 5 Stabby
+[]
+
+[]
+Card Name: Claw 'Em
+Tags: Werewitch
+Form: Werewolf
+Type: [melee] Single target, X hits.
+Action Points: 1
+Friendly Fire: No
+Stops Movement: Yes
+Effects: Leap 5
+Casting Sound: [Blank.wav]
+Casting Time: Use Sound Time
+Speed: 12
+Melee Time: 0.3
+Hit Sound: [DefaultPop.wav]
+Effect: Single target. 1 times x 8 damage.
+Card Text: Leap 5 further, over anything in the way, and rake for 8.
+Bottom Right: 8 Stabby
+[]
+
+[]
+Card Name: Witch Form
+Tags: Werewitch
+Form: Werewolf
+Type: [ranged] Single target, X hits.
+Action Points: 1
+Friendly Fire: No
+Stops Movement: No
+Effects: Form Witch
+Range: 1
+Projectile Art: Ball.png
+Casting Sound: [Blank.wav]
+Casting Time: Use Sound Time
+Speed: 20
+Hit Sound: [DefaultPop.wav]
+Effect: Single target. 1 times x 0 damage.
+Card Text: Stand up on two legs. The claws go away; the curses come out.
+Bottom Right: 0 Change
+[]
+
+[]
+Card Name: Wolf Form
+Tags: Werewitch
+Form: Witch
+Type: [ranged] Single target, X hits.
+Action Points: 1
+Friendly Fire: No
+Stops Movement: No
+Effects: Form Werewolf, Nimble 5
+Range: 1
+Projectile Art: Ball.png
+Casting Sound: [Blank.wav]
+Casting Time: Use Sound Time
+Speed: 20
+Hit Sound: [DefaultPop.wav]
+Effect: Single target. 1 times x 0 damage.
+Card Text: Return to your real form. Move fast.
+Bottom Right: 0 Change
+[]
+
+[]
+Card Name: Curse
+Tags: Werewitch
+Form: Witch
+Type: [ranged] Single target, X hits.
+Action Points: 1
+Friendly Fire: No
+Stops Movement: Yes
+Effects: Curse 3
+Range: 6
+Projectile Art: Ball.png
+Casting Sound: [Blank.wav]
+Casting Time: 1
+Speed: 10
+Hit Sound: [DefaultPop.wav]
+Effect: Single target. 1 times x 0 damage.
+Card Text: Curse some guy to take +3 melee damage per hit.
+Bottom Right: 0 Cursed
+[]
+
+[]
+Card Name: Beg, Borrow, but Mostly Steal
+Tags: Dirtbag
+Type: [ranged] Single target, X hits.
+Action Points: 1
+Friendly Fire: No
+Stops Movement: Yes
+Effects: Steal 3
+Range: 1
+Projectile Art: Ball.png
+Casting Sound: [Blank.wav]
+Casting Time: Use Sound Time
+Speed: 20
+Hit Sound: [DefaultPop.wav]
+Effect: Single target. 1 times x 0 damage.
+Card Text: Lift a card off anyone - friend or foe. They lose it, you hold it. Play it now, or on either of your next 2 turns.
+Bottom Right: 0 Stolen
+[]
+
+[]
+Card Name: Magic Tomahawk Missile
+Tags: Gun-O-Mancer
+Type: [ranged] AoE damage. Single Projectile
+Action Points: 3
+Friendly Fire: Yes
+Stops Movement: Yes
+Explosion Range: 5
+Range: 12
+Effects: Channel 1, FireTiles 2
+Sky Angle: 110
+Projectile Art: Circle.png
+Casting Sound: [FireballCast.wav]
+Casting Time: 0.6
+Speed: 22
+Hit Sound: [FireballBoom.wav]
+Effect: AoE 10 fire damage to enemies
+Card Text: Summon Uncle Sam's Finest. 
+Bottom Right: 15 Fire
+[]
+
+[]
+Card Name: Gatormancy
+Tags: Florida Man
+Type: [ranged] Single target, X hits.
+Action Points: 1
+Friendly Fire: No
+Stops Movement: Yes
+Range: 2
+Effects: Summon 1
+Summons: Gator
+Projectile Art: Ball.png
+Casting Sound: [Blank.wav]
+Casting Time: 0.5
+Speed: 20
+Hit Sound: [DefaultPop.wav]
+Effect: Single target. 1 times x 0 damage.
+Card Text: Invoke the fury of the swamp to call forth 'Gator.
+Bottom Right: 0 Gator
+[]
+
+[]
+# Planting your feet: no target is asked for, the ground inside 'Guard 4' is
+# marked with skulls, and anybody who steps onto it - ours or theirs - stops
+# where they are, takes the three shots, and then carries on walking. The
+# marks stay until the Florida Man dies or his next turn comes round.
+Card Name: Stand Your Ground State
+Tags: Florida Man
+Type: [ranged] Single target, X hits.
+Action Points: 1
+Friendly Fire: Yes
+Stops Movement: Yes
+Range: 4
+Effects: Guard 4
+Projectile Art: Ball.png
+Casting Sound: [Blank.wav]
+Casting Time: 0.2
+Speed: 20
+Hit Sound: [DefaultPop.wav]
+Effect: Single target. 3 times x 2 damage.
+Card Text: Shoot anything that gets close, just like Jesus did.
+Bottom Right: 2 Gunfire
+[]
+
+# The Gator's card. A summoned creature is on the player's side, so what it
+# holds is a PLAYER card tagged with its name - the same way any class picks
+# up its own cards. Nothing about it belongs in EnemyCards.txt.
+[]
+Card Name: Bite
+Tags: Gator
+Type: [melee] Single target, X hits.
+Range: 1
+Action Points: 1
+Friendly Fire: No
+Stops Movement: Yes
+Effects: Nimble 2
+Melee Time: 0.4
+Casting Sound: [Blank.wav]
+Casting Time: 0.2
+Hit Sound: [DefaultPop.wav]
+Effect: Single target. 1 times x 8 damage.
+Card Text: Snap. Not much of a plan, but it works.
+Bottom Right: 8 Chomp
+[]
+
+# Marks a target instead of hurting one. The bullseye under their bar says the
+# next blow to land on them does half again - and anything whose damage is
+# written as a range comes up at the top of it first. One hit spends the mark.
+[]
+Card Name: Swamp Wise
+Tags: Florida Man
+Type: [ranged] Single target, X hits.
+Action Points: 1
+Friendly Fire: No
+Stops Movement: Yes
+Range: 8
+Effects: Vulnerable 3
+Projectile Art: Ball.png
+Casting Sound: [Blank.wav]
+Casting Time: 0.3
+Speed: 24
+Hit Sound: [DefaultPop.wav]
+Effect: Single target. 1 times x 0 damage.
+Card Text: You know what that one's about to do. Everybody hit it there.
+Bottom Right: 0 Marked
+[]
+
+# 'Mower 15' sends the machine off down a straight line - never a diagonal -
+# for up to fifteen squares. It runs over whatever it touches for the 1 to 20
+# on the Effect line, drives straight through anything it kills, and glances
+# off in some random direction from anything it doesn't. Past the fourth
+# square it starts to wander: a 5% chance per square of drifting one across
+# before carrying on. Every contact is a 2-in-5 chance of the whole thing
+# going up early; if it never does, it goes up at the end of the run either
+# way, for the 'Blast:' range over 'Explosion Range' squares.
+#
+# Friendly Fire is Yes and means it: this thing does not know whose side it
+# is on, and it does not steer.
+[]
+Card Name: Lawnmower with a Chainsaw
+Tags: Florida Man
+Type: [ranged] Single target, X hits.
+Action Points: 2
+Friendly Fire: Yes
+Stops Movement: Yes
+Range: 15
+Explosion Range: 3
+Effects: Mower 15
+Blast: 1 to 15
+Projectile Art: Ball.png
+Casting Sound: [Blank.wav]
+Casting Time: 1.5
+Speed: 5
+Hit Sound: [FireballBoom.wav]
+Effect: Single target. 1 times x 1 to 20 damage.
+Card Text: A horrifying feat of redneck engineering.
+Bottom Right: 20 Chainsaw
+[]
+
+# Loading different shells. These two cost nothing and hit nobody: all they do
+# is reach into the Gun-O-Mancer's own hand and change which cone he is
+# carrying. 'Replaces:' is what comes out, 'With:' is what goes in, and the
+# swap sticks to that character - a second Gun-O-Mancer keeps his own shells.
+[]
+Card Name: Lightning Shells
+Tags: Gun-O-Mancer
+Type: [ranged] Single target, X hits.
+Action Points: 0
+Friendly Fire: No
+Stops Movement: No
+Range: 1
+Effects: Swap 1
+Replaces: Hot Lead
+With: Shock Shot
+Projectile Art: Ball.png
+Casting Sound: [Blank.wav]
+Casting Time: 0.2
+Speed: 20
+Hit Sound: [DefaultPop.wav]
+Effect: Single target. 1 times x 0 damage.
+Card Text: Break the fire rounds and load the ones that bite.
+Bottom Right: 0 Shells
+[]
+
+[]
+Card Name: Flaming Shells
+Tags: Gun-O-Mancer
+Type: [ranged] Single target, X hits.
+Action Points: 0
+Friendly Fire: No
+Stops Movement: No
+Range: 1
+Effects: Swap 1
+Replaces: Shock Shot
+With: Hot Lead
+Projectile Art: Ball.png
+Casting Sound: [Blank.wav]
+Casting Time: 0.2
+Speed: 20
+Hit Sound: [DefaultPop.wav]
+Effect: Single target. 1 times x 0 damage.
+Card Text: Back to the ones that set things on fire.
+Bottom Right: 0 Shells
+[]
+
+# The same cone as Hot Lead - same [cone], same Range 3 - so the shape you aim
+# does not change when you change shells. What changes is what it leaves
+# behind: no fire, but everything caught loses its next turn.
+[]
+Card Name: Shock Shot
+Tags: Gun-O-Mancer
+Dealt: No
+Type: [cone] AoE damage
+Action Points: 2
+Friendly Fire: No
+Stops Movement: Yes
+Range: 3
+Effects: Stun 1
+Casting Sound: [Blank.wav]
+Casting Time: Use Sound Time
+Speed: 20
+Hit Sound: [FireballCast.wav]
+Effect: AoE 5 shock damage to enemies
+Card Text: Spray a cone of lightning to stun stuff.
+Bottom Right: 5 Shock
+[]
+
+# The screen goes black and whatever is in Florida Man/BathSalts/ plays across
+# it - single pictures for two seconds each, numbered runs like Gator1.png,
+# Gator2.png as one 30fps animation. While it is dark everyone on the board
+# pays: enemies up to 130% of their own health, so a good roll clears a room
+# and a bad one wastes a turn; the party and its pets up to 80% of theirs. The
+# Florida Man does not roll. He always comes back on 1 health, somewhere
+# within 15 tiles of where he went under.
+[]
+Card Name: Bath Salts
+Tags: Florida Man
+Type: [ranged] Single target, X hits.
+Action Points: 3
+Friendly Fire: Yes
+Stops Movement: Yes
+Range: 1
+Effects: BathSalts 1
+Projectile Art: Ball.png
+Casting Sound: [Blank.wav]
+Casting Time: 2
+Speed: 20
+Hit Sound: [DefaultPop.wav]
+Effect: Single target. 1 times x 0 damage.
+Card Text: Black out and fuck shit up.
+Bottom Right: 0 ????
+[]
+
+Card Name: Kick in the Nuts
+Tags: Dirtbag
+Type: [melee] Single target, 1 hits.
+Action Points: 1
+Friendly Fire: No
+Stops Movement: Yes
+Mind Damage: 20
+Casting Sound: [Blank]
+Casting Time: 0.1
+Hit Sound: [DefaultPop.wav]
+Effect: 2 damage
+Effects: Stun 1, Nimble 2
+Card Text: Two damage, one lost turn, and you are already leaving.
+Bottom Right: 2 + Stun
+[]
+
+Card Name: Rocket Pods
+Tags: Cyber Smith
+Type: [ranged] AoE damage. Single Projectile
+Action Points: 2
+Friendly Fire: Yes
+Stops Movement: Yes
+Aims: 3
+Range: 8
+Explosion Range: 1
+Casting Sound: [Blank]
+Casting Time: 0.2
+Speed: 10
+Hit Sound: [DefaultPop.wav]
+Effect: AoE 3 damage to enemies
+Effects: FireTiles 2
+Fire Chance: 15
+Card Text: Three rockets, picked one at a time. Where two blasts overlap, so
+Card Text: does the damage. Some of what they touch catches.
+Bottom Right: 3 x 3
+[]
+
+Card Name: Swipe
+Tags: Werewitch
+Form: Werewolf
+Type: [swipe] AoE damage
+Action Points: 1
+Friendly Fire: No
+Stops Movement: Yes
+Effect: AoE 7 damage to enemies
+Casting Sound: [Blank]
+Casting Time: 0.15
+Hit Sound: [DefaultPop.wav]
+Card Text: Three squares at once, in whichever quarter you point at.
+Bottom Right: 7 Claw
+[]
+
+Card Name: Terror
+Tags: Werewitch
+Form: Witch
+Type: [cone] AoE damage
+Action Points: 2
+Friendly Fire: No
+Stops Movement: Yes
+Range: 4
+Mind Damage: 90
+Mind Effect: Fear 1
+Casting Sound: [Blank]
+Casting Time: 0.3
+Hit Sound: [Blank]
+Card Text: No wound at all. Ninety nerve out of everyone in the wedge, and
+Card Text: whoever breaks runs for a turn.
+Bottom Right: 90 Mind
+[]

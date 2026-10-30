@@ -1,0 +1,75 @@
+# One block per playable class.
+#
+# ART is a folder, not a picture. Inside it a POSE folder (IdlePose) holds the
+# pictures and the animation folders — see the README in Content/Cast. Poses
+# are found by looking, so nothing here names them. A class with no pose yet
+# is drawn as a cube with its initial on top.
+#
+#   Colour: r, g, b            what colour that cube is
+#   Mind: 100                  nerve, or 'Infinite' for something that cannot
+#                              be frightened
+#   Art: FolderName            optional; which folder to draw from.
+#                              Without it, every pose folder is used.
+#   Cast Animation: GunShot    optional; an animation folder played over the
+#                              sprite while a card is cast. Without it, cards
+#                              play SpellCast. A card's own "Animation:" line
+#                              beats both.
+#   Form: Name, Folder, Anim   a shape a shapeshifter can wear: its name, its
+#                              art folder, and optionally its own cast
+#                              animation. The first Form is where it starts.
+#   Card Tags: A, B            optional; which cards it holds. Defaults to the
+#                              class's own name.
+
+Class: Dirtbag
+HP: 30
+Movement: 8
+Actions: 2
+Colour: 73, 66, 56
+
+Class: Gun-O-Mancer
+HP: 20
+Movement: 4
+Actions: 2
+Colour: 97, 92, 92
+
+Class: Cyber Smith
+HP: 50
+Movement: 5
+Actions: 2
+Colour: 100, 97, 93
+
+Class: The Vessel
+HP: 30
+Movement: 5
+Actions: 2
+Colour: 92, 70, 50
+
+# A shapeshifter. Cards carrying a matching "Form:" line only appear while
+# she wears that shape, so the wolf's claws and the witch's curses never share
+# a hand.
+Class: Werewitch
+HP: 80
+Movement: 8
+Actions: 2
+Colour: 60, 46, 65
+Form: Werewolf, WolfForm
+Form: Witch, WitchForm
+
+# The Gator he summons is on OUR side: it holds player cards and takes orders,
+# so it is written here rather than in Enemies.txt. "Summon:" opens the block
+# instead of "Class:", which keeps it out of the party picker - you get one by
+# playing Gatormancy, not by choosing it before the mission. Its art lives in
+# its summoner's folder, since it is his creature.
+Class: Florida Man
+HP: 50
+Movement: 4
+Actions: 2
+Colour: 133, 93, 68
+
+Summon: Gator
+Summoned By: Florida Man
+HP: 14
+Movement: 6
+Actions: 2
+Size: 2 x 1
+Colour: 69, 94, 59

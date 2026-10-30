@@ -1,0 +1,45 @@
+# One block per enemy kind: who they are and what they look like. How hard
+# they hit, what it sounds like and how far they reach all live on their CARDS
+# in Content/Cards/EnemyCards.txt - an enemy holds the cards tagged with its
+# name (or with its "Card Tags:" line, if it has one).
+#
+# ART is a folder, not a picture - see Content/Cast/README.txt. An enemy with
+# no art folder yet is drawn as a cube with its initial on top.
+#
+#   Colour: r, g, b            what colour that cube is
+#   Mind: 100                  nerve, or 'Infinite' for something that cannot
+#                              be frightened - drawn grey with an infinity sign
+#   Art: FolderName            optional; which folder to draw from
+#   Cast Animation: Swing      optional; an animation folder played while a
+#                              card is played
+#
+# "Size:" is how many squares on a SIDE the body covers, so Size 2 is a body
+# four tiles across. A big body needs all of those tiles flat, clear and
+# revealed before it can stand there, and it is in reach of anything touching
+# any of its sides.
+
+Enemy: Goblin
+HP: 8
+Movement: 5
+Actions: 2
+Colour: 104, 99, 76
+
+Enemy: Living Stone
+HP: 40
+Movement: 2
+Actions: 2
+Size: 2
+Colour: 106, 105, 109
+Mind: Infinite
+
+Enemy: Imp
+HP: 10
+Movement: 5
+Actions: 2
+Colour: 126, 36, 33
+
+Enemy: Lich
+HP: 30
+Movement: 4
+Actions: 2
+Colour: 70, 90, 110

@@ -1,0 +1,5 @@
+# One pin per line: Name  x  y
+# The name is also the level file, so 'PixelFlat' opens 'PixelFlat.txt'.
+# Coordinates are map-image pixels.
+PixelFlat               3900    2600
+PixelRooms              4600    2700

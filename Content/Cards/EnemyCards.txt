@@ -1,0 +1,93 @@
+# ========================= ENEMY CARD FORMAT =========================
+# Exactly the same format as PlayerCards.txt -
+#
+# HOW AN ENEMY USES THESE
+# Uses melee if it can. Otherwise ranged.
+
+#   1. If it holds a MELEE card and it can reach a player this turn (its
+#      movement plus that card's range), it walks at the nearest such player
+#      and swings.
+#   2. Otherwise, if it holds a RANGED card, it moves only as far as it must
+#      to bring the nearest player inside that card's range, then fires.
+#      It does not close any further than that.
+#   3. If it holds no attack card it can use - because the Dirtbag has stolen
+#      the only one - it cannot attack at all. It picks a random square inside
+#      its movement range and wanders there.
+#
+# THE DEFAULT CARD
+# An enemy in Enemies.txt with no card tagged for it is dealt the one tagged
+# "Default" instead, so a newly added enemy can fight without you writing it a
+# card first. As soon as an enemy has a card of its own, it stops using the
+# default - the Goblin has Goblin Claw, so it never smacks anything.
+#
+# =====================================================================
+
+[]
+Card Name: Smack Something
+Tags: Default
+Type: [melee] Single target, X hits.
+Range: 1
+Action Points: 1
+Friendly Fire: No
+Stops Movement: Yes
+Melee Time: 0.2
+Casting Sound: [Blank.wav]
+Casting Time: 0.5
+Hit Sound: [DefaultPop.wav]
+Effect: Single target. 1 times x 5 damage.
+Card Text: No technique whatsoever. Still hurts.
+Bottom Right: 5 Stabby
+[]
+
+[]
+Card Name: Goblin Claw
+Tags: Goblin
+Type: [melee] Single target, X hits.
+Range: 1
+Action Points: 1
+Friendly Fire: No
+Stops Movement: Yes
+Melee Time: 0.2
+Casting Sound: [Blank.wav]
+Casting Time: 0.2
+Hit Sound: [DefaultPop.wav]
+Effect: Single target. 1 times x 5 damage.
+Card Text: A grubby swipe. Nothing personal.
+Bottom Right: 3 Stabby
+[]
+
+[]
+Card Name: Stone Slap
+Tags: Living Stone
+Animation: MeleePunch
+Type: [melee] Single target, X hits.
+Range: 1
+Action Points: 1
+Friendly Fire: No
+Stops Movement: Yes
+Melee Time: 0.5
+Casting Sound: [Blank.wav]
+Casting Time: 0.75
+Hit Sound: [DefaultPop.wav]
+Effect: Single target. 1 times x 12 damage.
+Card Text: Like being bitch-slapped by a mountain.
+Bottom Right: 12 Smashing
+[]
+
+[]
+Card Name: Firebolt
+Tags: Imp
+Type: [ranged] Single target, X hits.
+Range: 7
+Action Points: 1
+Friendly Fire: No
+Stops Movement: Yes
+Projectile Art: Ball.png
+Casting Sound: [FireballCast.wav]
+Casting Time: 0.3
+Speed: 26
+Hit Sound: [DefaultPop.wav]
+Effect: Single target. 1 times x 3 damage.
+Card Text: A spat cinder, thrown from somewhere safe.
+Bottom Right: 3 Fire
+[]

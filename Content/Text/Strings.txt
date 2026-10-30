@@ -1,0 +1,145 @@
+# Every line of player-facing text in the game lives here.
+# Format:  key = text     (everything after the first = is the text, verbatim)
+# Rewrite the right-hand side freely — the game only cares about the keys.
+# Room dialogue is NOT here; that lives in the mission .txt files.
+
+# --- Title screen ---
+title = The Timeline is
+# The word below is scrambled on screen and never shows in the right order.
+title_scramble_word = fucked
+# Shown small and dim in the bottom-left corner from the moment the game
+# opens, so a screenshot always says which build it came from.
+version = Panhandle V2
+menu_new_game = New Game
+menu_continue = Continue
+
+# --- Map & room ---
+map_save = Save
+saved = Game saved.
+
+# --- Battle (placeholder) ---
+battle_win = Fine!
+
+# --- Death ---
+death_title = You died.
+death_reload = Reload
+death_no_save = You didn't save so you're screwed. (Going to the map)
+
+# --- Dev map mode (only shown with --devmap) ---
+devmap_hint = DEV MAP: click anywhere to place a destination. Its name is also its level.
+devmap_name_prompt = Name this place, then press Enter:
+devmap_saved = Destination saved to Destinations.txt.
+devmap_on = Dev map placement ON. ~ turns it off again.
+devmap_off = Dev map placement OFF.
+
+# --- Party select ---
+party_title = Pick your 3 characters.
+party_start = Start
+party_slot_empty = (empty)
+
+# --- Battle ---
+# {name}, {target}, {attacker}, {dmg}, {type}, {count} are filled in by the game.
+battle_turn = {name}'s turn
+battle_hit = {target} takes {dmg} {type} damage.
+battle_down = {name} goes down!
+
+# --- Content problem popup (shown at startup when a file has mistakes) ---
+error_title = Content problems found
+error_counts = {errors} error(s), {warnings} warning(s)
+error_continue = Continue
+error_more = ...and {count} more.
+error_log = Full list saved to {path}
+
+# --- Isometric mode ---
+iso_enter = Click a character, then a tile, to move. Stay sharp.
+iso_explore_hint = Exploring - click a character to select, a tile to walk, a door to open it.
+iso_end_turn = End Turn
+iso_move_left = Movement left: {points}
+iso_out_of_range = Out of range.
+iso_transition = The party moves through to {room}.
+iso_door_open = The door creaks open...
+iso_clear = Clear... for now.
+iso_victory = Area cleared!
+iso_card_range = Range {range}
+iso_move_spent = Card played - no movement left this turn.
+iso_pick_target = Pick a target.
+iso_dialogue_next = click to continue
+iso_pick_more = Pick {count} more target(s).
+iso_needs_enemy = That card wants an enemy.
+iso_needs_ally = That card helps a friend - pick one of yours.
+iso_hit_armor = {target} takes {dmg} {type}; armour soaked {soaked}.
+iso_burning = {name} is burning ({stacks} stacks).
+iso_burn_out = {gone} stack(s) of fire burn out on {name} ({left} left).
+iso_armored = {name} now has {armor} armour.
+iso_nimble = {name} can still move {points}.
+iso_cursed = {name} is cursed (+{bonus} from melee).
+iso_form = {name} shifts into {form} form.
+iso_stole = {thief} lifts {card} off {victim}, and can play it for {turns} turns.
+iso_steal_over = {card} goes back to {owner}.
+iso_actions_left = Actions {points}
+iso_card_actions = AP: {points}
+iso_no_actions = That card costs {cost}; you have {points}.
+iso_steal_pick = Take one card from {name}.
+iso_steal_pick_form = ...and one {form} card to go with it.
+iso_empty_square = Nothing is standing there.
+iso_channel_start = {name} begins channelling {card}.
+iso_channelling = {name} is channelling {card} and cannot move.
+iso_channel_waiting = {card} is still gathering - {turns} more turn(s).
+iso_channel_rooted = Channelling {card} - you cannot move until it is released.
+iso_fire_lit = {count} square(s) catch fire for {turns} turns.
+iso_fire_caught = {name} catches fire ({stacks} stacks of burning).
+iso_needs_other = Pick somebody else - you cannot rob yourself.
+iso_nothing_to_steal = {name} has nothing worth taking.
+iso_no_cards = {name} has nothing to attack with, and wanders off.
+iso_log_empty = Nothing has happened yet.
+iso_log_more = Scrolled back - wheel down to return to the newest.
+replay_start = Start Saving Replay
+replay_stop = Stop Saving Replay
+replay_started = Recording. Press again to write the file.
+replay_done = Replay saved
+replay_saved = Replay saved as {name}.
+replay_failed = Could not write the replay - see the console.
+replay_watching = Watching a replay. Next Turn or SPACE steps through it.
+replay_title = Replay: {name}
+replay_turn = Turn {turn} of {total}
+replay_end = The replay has run out.
+replay_next = Next Turn
+replay_card = {name} plays {card}.
+replay_over = Mission over: {how}.
+replay_none = No replays yet. Play a mission and press Save Replay.
+menu_replays = Replays
+iso_pet_turn = {owner} - {name}
+iso_summoned = {owner} calls up a {name}.
+iso_summon_no_room = There is nowhere for a {name} to stand.
+iso_guarding = {name} stands their ground: anything within {range} takes {shots} shots of {dmg}.
+iso_guard_fires = {name} opens up on {target} - {shots} shots.
+iso_vulnerable = {name} is marked - the next hit lands harder ({turns} turn(s)).
+iso_vulnerable_hit = The mark pays off: {bonus} extra on {target}.
+iso_afraid = {name} is terrified - running for {turns} turn(s).
+iso_mind_damage = {name} loses {amount} nerve, {left} left.
+iso_mind_immune = {name} has no nerve to break.
+iso_mind_took = {name}: {effect} takes hold - needed {chance}%, rolled {roll}.
+iso_mind_held = {name} holds it together - needed {chance}%, rolled {roll}.
+iso_mind_back = {name} recovers {amount} nerve, {left} now.
+iso_mind_broken = {name} is out of nerve and can do nothing this turn.
+iso_mind_shaken = {name} is shaken: one action this turn.
+iso_fear_flees = {name} bolts, and the turn goes with it.
+iso_stunned = {name} is stunned for {turns} turn(s).
+iso_stun_skip = {name} is stunned and loses the turn ({turns} left).
+iso_swapped = {name} loads {new} in place of {old}.
+iso_trip_start = {name} takes the bath salts. The lights go out.
+iso_trip_empty = No pictures in the BathSalts folder - it still happens, you just cannot see it.
+iso_trip_survivor = {name} comes round on 1 health.
+iso_trip_woke = {name} wakes up at {x}, {y} with no idea how.
+dev_title = Dev menu
+dev_win = Win Level
+dev_die = Die!
+dev_fps = Frame rate: {fps} fps
+dev_anchor = Anchor Art
+dev_close = ~ closes this
+dev_anchor_title = Anchor Art - nudge a character on its square
+dev_anchor_vertical = vertical
+dev_anchor_hint = arrows nudge  |  V or the box allows height  |  Tab next  |  Enter saves  |  Esc leaves it
+dev_anchor_saved = Anchors saved to Anchors.txt.
+dev_anchor_unsaved = Anchors applied, but Anchors.txt could not be written.
+iso_summon_already = There is already a {name} out.
