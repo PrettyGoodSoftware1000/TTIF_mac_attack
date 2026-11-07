@@ -8,4 +8,4 @@ that publishes this, live in PrettyGoodSoftware1000/TheTimelineIs.
 
 No saves, no replays, no editor: closing the tab starts over.
 
-Built from TheTimelineIs 53ca973ce24ad0836503aa00feebe361060c8052
+Built from TheTimelineIs cbf67464a60667c5d6befc32665fe52969124c24
